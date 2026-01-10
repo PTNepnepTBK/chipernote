@@ -75,7 +75,6 @@ class AppStrings {
   static const String filterFavorites = 'Favorites';
   static const String filterLocked = 'Locked';
   static const String filterRecent = 'Recent';
-  static const String filterTags = 'Tags';
 
   // Empty States
   static const String noSearchResults = 'No notes found';
@@ -83,8 +82,6 @@ class AppStrings {
   static const String clearSearch = 'Clear search';
   static const String noFavorites = 'No favorites yet';
   static const String noFavoritesSubtitle = 'Tap star on notes to add them here';
-  static const String noTags = 'No tags created';
-  static const String createTag = 'Create tag';
 
   // ========== EDITOR ==========
   static const String thisNoteIsLocked = 'This note is locked';

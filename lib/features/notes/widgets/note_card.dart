@@ -97,17 +97,11 @@ class _NoteCardState extends State<NoteCard> with SingleTickerProviderStateMixin
       child: ScaleTransition(
         scale: _scaleAnimation,
         child: Container(
-          // Limit overall card height to avoid overflow in tight grid cells
-          constraints: BoxConstraints(minHeight: 90, maxHeight: 160),
+          // Allow flexible height for Masonry layout; set a small minHeight
+          constraints: BoxConstraints(minHeight: 80),
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(AppDimensions.radiusMedium),
-            border: Border(
-              left: BorderSide(
-                color: Color(int.parse(widget.note.colorCode.replaceFirst('#', '0xFF'))),
-                width: 4,
-              ),
-            ),
             boxShadow: [
               BoxShadow(
                 color: AppColors.shadow1,
@@ -119,9 +113,9 @@ class _NoteCardState extends State<NoteCard> with SingleTickerProviderStateMixin
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
+              // Header (reduce top padding)
               Padding(
-                padding: EdgeInsets.all(AppDimensions.spacingMd),
+                padding: EdgeInsets.fromLTRB(AppDimensions.spacingMd, AppDimensions.spacingXs, AppDimensions.spacingMd, AppDimensions.spacingSm),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -180,21 +174,19 @@ class _NoteCardState extends State<NoteCard> with SingleTickerProviderStateMixin
               ),
               SizedBox(height: AppDimensions.spacingXs),
               // Content preview
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppDimensions.spacingMd),
-                  child: Text(
-                    widget.decryptedContent,
-                    style: AppTextStyles.bodyMedium,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: AppDimensions.spacingMd),
+                child: Text(
+                  widget.decryptedContent,
+                  style: AppTextStyles.bodyMedium,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              SizedBox(height: AppDimensions.spacingXs),
-              // Metadata
+              SizedBox(height: AppDimensions.spacingSm),
+              // Metadata (increase bottom padding)
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: AppDimensions.spacingMd, vertical: AppDimensions.spacingXs),
+                padding: EdgeInsets.symmetric(horizontal: AppDimensions.spacingMd, vertical: AppDimensions.spacingMd),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

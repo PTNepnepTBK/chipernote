@@ -6,6 +6,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_durations.dart';
 import '../models/note_model.dart';
 import '../widgets/note_card.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../widgets/filter_chips_bar.dart';
 import 'note_editor_screen.dart';
 import '../../../core/services/notes_service.dart';
@@ -195,9 +196,6 @@ class _NotesListScreenState extends State<NotesListScreen>
           _filteredNotes = List.from(_notes)
             ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
           break;
-        case NoteFilter.tags:
-          _filteredNotes = List.from(_notes);
-          break;
       }
 
       // Apply search filter
@@ -358,15 +356,11 @@ class _NotesListScreenState extends State<NotesListScreen>
                       ],
                     ),
                   )
-                : GridView.builder(
+                : MasonryGridView.count(
                     padding: EdgeInsets.all(AppDimensions.spacingMd),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: AppDimensions.gridColumns,
-                      crossAxisSpacing: AppDimensions.gridGap,
-                      mainAxisSpacing: AppDimensions.gridGap,
-                      // Increase aspect ratio to make cards less tall
-                      childAspectRatio: 1.2,
-                    ),
+                    crossAxisCount: AppDimensions.gridColumns,
+                    mainAxisSpacing: AppDimensions.gridGap,
+                    crossAxisSpacing: AppDimensions.gridGap,
                     itemCount: _filteredNotes.length,
                     itemBuilder: (context, index) {
                       final note = _filteredNotes[index];
@@ -378,7 +372,6 @@ class _NotesListScreenState extends State<NotesListScreen>
                         onTap: () => _openEditor(note),
                       );
                     },
-
                   ),
           ),
         ],
