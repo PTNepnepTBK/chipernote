@@ -22,7 +22,7 @@ class NotesService {
     required String title,
     required String content,
     String? color,
-    bool isFavorite = false,
+    bool ispinned = false,
   }) async {
     if (!_authService.isAuthenticated) {
       throw Exception('Not authenticated. Please unlock the app first.');
@@ -45,7 +45,7 @@ class NotesService {
         content: content.substring(0, content.length > 100 ? 100 : content.length), // Preview
         encryptedData: encryptedContent,
         color: color,
-        isFavorite: isFavorite,
+        ispinned: ispinned,
       );
 
       return noteId;
@@ -78,7 +78,7 @@ class NotesService {
             'content': decryptedContent,
             'created_at': note['created_at'],
             'updated_at': note['updated_at'],
-            'is_favorite': note['is_favorite'] == 1,
+            'is_pinned': note['is_pinned'] == 1,
             'color': note['color'],
           });
         } catch (e) {
@@ -112,7 +112,7 @@ class NotesService {
         'content': decryptedContent,
         'created_at': note['created_at'],
         'updated_at': note['updated_at'],
-        'is_favorite': note['is_favorite'] == 1,
+        'is_pinned': note['is_pinned'] == 1,
         'color': note['color'],
       };
     } catch (e) {
@@ -127,7 +127,7 @@ class NotesService {
     required String title,
     required String content,
     String? color,
-    bool? isFavorite,
+    bool? ispinned,
   }) async {
     if (!_authService.isAuthenticated) {
       throw Exception('Not authenticated. Please unlock the app first.');
@@ -148,7 +148,7 @@ class NotesService {
         content: content.substring(0, content.length > 100 ? 100 : content.length),
         encryptedData: encryptedContent,
         color: color ?? existingNote['color'] as String?,
-        isFavorite: isFavorite ?? (existingNote['is_favorite'] as int) == 1,
+        ispinned: ispinned ?? (existingNote['is_pinned'] as int) == 1,
       );
 
       return true;
@@ -173,17 +173,17 @@ class NotesService {
     }
   }
 
-  /// Toggle favorite status
-  Future<bool> toggleFavorite(String id, bool isFavorite) async {
+  /// Toggle pinned status
+  Future<bool> togglepinned(String id, bool ispinned) async {
     if (!_authService.isAuthenticated) {
       throw Exception('Not authenticated. Please unlock the app first.');
     }
 
     try {
-      await _dbService.toggleFavorite(id, isFavorite);
+      await _dbService.togglepinned(id, ispinned);
       return true;
     } catch (e) {
-      print('Error toggling favorite: $e');
+      print('Error toggling pinned: $e');
       return false;
     }
   }

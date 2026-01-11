@@ -80,7 +80,7 @@ id | password_hash | salt | biometric_enabled | created_at | updated_at
 
 ### notes
 ```sql
-id   | title | content | encrypted_data      | created_at | is_favorite
+id   | title | content | encrypted_data      | created_at | is_pinned
 uuid | "My"  | preview | "IV:base64:cipher"  | timestamp  | 0/1
 ```
 
@@ -118,7 +118,7 @@ String? noteId = await notesService.createNote(
   title: 'My Note',
   content: 'Secret content',
   color: '#FF5733',
-  isFavorite: false,
+  ispinned: false,
 );
 
 // Get all notes
@@ -137,8 +137,8 @@ bool success = await notesService.updateNote(
 // Delete note
 bool success = await notesService.deleteNote(noteId);
 
-// Toggle favorite
-bool success = await notesService.toggleFavorite(noteId, true);
+// Toggle pinned
+bool success = await notesService.togglepinned(noteId, true);
 ```
 
 ### DatabaseService

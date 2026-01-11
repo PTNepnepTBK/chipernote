@@ -14,7 +14,7 @@ class Note {
   final String? independentPasswordHash;
   final String? categoryId;
   final List<String> tagIds;
-  final bool isFavorite;
+  final bool ispinned;
   final bool isPinned;
   final String colorCode;
   final DateTime createdAt;
@@ -38,7 +38,7 @@ class Note {
     this.independentPasswordHash,
     this.categoryId,
     this.tagIds = const [],
-    this.isFavorite = false,
+    this.ispinned = false,
     this.isPinned = false,
     this.colorCode = '#00BCD4',
     required this.createdAt,
@@ -63,7 +63,7 @@ class Note {
     String? independentPasswordHash,
     String? categoryId,
     List<String>? tagIds,
-    bool? isFavorite,
+    bool? ispinned,
     bool? isPinned,
     String? colorCode,
     DateTime? createdAt,
@@ -87,7 +87,7 @@ class Note {
       independentPasswordHash: independentPasswordHash ?? this.independentPasswordHash,
       categoryId: categoryId ?? this.categoryId,
       tagIds: tagIds ?? this.tagIds,
-      isFavorite: isFavorite ?? this.isFavorite,
+      ispinned: ispinned ?? this.ispinned,
       isPinned: isPinned ?? this.isPinned,
       colorCode: colorCode ?? this.colorCode,
       createdAt: createdAt ?? this.createdAt,
@@ -114,7 +114,7 @@ class Note {
       'independentPasswordHash': independentPasswordHash,
       'categoryId': categoryId,
       'tagIds': tagIds,
-      'isFavorite': isFavorite,
+      'ispinned': ispinned,
       'isPinned': isPinned,
       'colorCode': colorCode,
       'createdAt': createdAt.toIso8601String(),
@@ -141,7 +141,7 @@ class Note {
       independentPasswordHash: json['independentPasswordHash'] as String?,
       categoryId: json['categoryId'] as String?,
       tagIds: (json['tagIds'] as List<dynamic>?)?.map((e) => e as String).toList() ?? [],
-      isFavorite: json['isFavorite'] as bool? ?? false,
+      ispinned: json['ispinned'] as bool? ?? false,
       isPinned: json['isPinned'] as bool? ?? false,
       colorCode: json['colorCode'] as String? ?? '#00BCD4',
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -181,6 +181,6 @@ class Note {
 
   @override
   String toString() {
-    return 'Note(id: $id, isFavorite: $isFavorite, isPinned: $isPinned, createdAt: $createdAt)';
+    return 'Note(id: $id, ispinned: $ispinned, isPinned: $isPinned, createdAt: $createdAt)';
   }
 }

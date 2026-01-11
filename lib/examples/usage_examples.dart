@@ -69,7 +69,7 @@ Future<void> exampleCreateNote() async {
       title: 'My Secret Note',
       content: 'This is my secret content that will be encrypted!',
       color: '#FF5733',
-      isFavorite: false,
+      ispinned: false,
     );
     
     if (noteId != null) {

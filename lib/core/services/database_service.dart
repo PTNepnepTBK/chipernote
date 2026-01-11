@@ -58,14 +58,14 @@ class DatabaseService {
         encrypted_data TEXT NOT NULL,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
-        is_favorite INTEGER NOT NULL DEFAULT 0,
+        is_pinned INTEGER NOT NULL DEFAULT 0,
         color TEXT
       )
     ''');
 
     // Create indexes
     await db.execute('CREATE INDEX idx_notes_created_at ON notes(created_at DESC)');
-    await db.execute('CREATE INDEX idx_notes_favorite ON notes(is_favorite, created_at DESC)');
+    await db.execute('CREATE INDEX idx_notes_pinned ON notes(is_pinned, created_at DESC)');
   }
 
   // App Settings Methods
@@ -164,7 +164,7 @@ class DatabaseService {
     required String content,
     required String encryptedData,
     String? color,
-    bool isFavorite = false,
+    bool ispinned = false,
   }) async {
     final db = await database;
     final now = DateTime.now().toIso8601String();
@@ -178,7 +178,7 @@ class DatabaseService {
         'encrypted_data': encryptedData,
         'created_at': now,
         'updated_at': now,
-        'is_favorite': isFavorite ? 1 : 0,
+        'is_pinned': ispinned ? 1 : 0,
         'color': color,
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -216,14 +216,14 @@ class DatabaseService {
     );
   }
 
-  Future<void> toggleFavorite(String id, bool isFavorite) async {
+  Future<void> togglepinned(String id, bool ispinned) async {
     final db = await database;
     final now = DateTime.now().toIso8601String();
 
     await db.update(
       'notes',
       {
-        'is_favorite': isFavorite ? 1 : 0,
+        'is_pinned': ispinned ? 1 : 0,
         'updated_at': now,
       },
       where: 'id = ?',

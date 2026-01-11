@@ -67,7 +67,7 @@ class _NotesListScreenState extends State<NotesListScreen>
             contentSalt: '',
             titleIV: '',
             contentIV: '',
-            isFavorite: (n['is_favorite'] as bool?) ?? (n['is_favorite'] == 1),
+            ispinned: (n['is_pinned'] as bool?) ?? (n['is_pinned'] == 1),
             isPinned: false,
             colorCode: n['color'] as String? ?? '#00BCD4',
             createdAt: DateTime.parse(n['created_at'] as String),
@@ -137,11 +137,11 @@ class _NotesListScreenState extends State<NotesListScreen>
             ),
             ListTile(
               leading: Icon(Icons.star, color: AppColors.textPrimary),
-              title: Text(note.isFavorite ? 'Unfavorite' : 'Mark as Favorite'),
+              title: Text(note.ispinned ? 'Unpinned' : 'Mark as pinned'),
               onTap: () async {
                 Navigator.pop(context);
                 final notesService = NotesService();
-                await notesService.toggleFavorite(note.id, !note.isFavorite);
+                await notesService.togglepinned(note.id, !note.ispinned);
                 await _loadNotes();
               },
             ),
@@ -186,8 +186,8 @@ class _NotesListScreenState extends State<NotesListScreen>
         case NoteFilter.all:
           _filteredNotes = List.from(_notes);
           break;
-        case NoteFilter.favorites:
-          _filteredNotes = _notes.where((n) => n.isFavorite).toList();
+        case NoteFilter.pinned:
+          _filteredNotes = _notes.where((n) => n.ispinned).toList();
           break;
         case NoteFilter.locked:
           _filteredNotes = _notes.where((n) => n.hasIndependentPassword).toList();

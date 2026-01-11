@@ -29,7 +29,7 @@ ChiperNote adalah aplikasi catatan terenkripsi yang mengimplementasikan konsep *
 ### 📱 Functionality
 - Create, Read, Update, Delete notes (CRUD)
 - Automatic encryption/decryption
-- Favorite notes
+- pinned notes
 - Color-coded notes
 - Search and filter (future)
 - Categories and folders (future)

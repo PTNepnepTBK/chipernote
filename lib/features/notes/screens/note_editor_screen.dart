@@ -28,7 +28,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
   late TextEditingController _contentController;
   Timer? _debounceTimer;
   bool _isSaving = false;
-  bool _isFavorite = false;
+  bool _ispinned = false;
   bool _isLocked = false;
   String _saveStatus = AppStrings.editing;
 
@@ -46,6 +46,11 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
     // Auto-save listener
     _titleController.addListener(_onContentChanged);
     _contentController.addListener(_onContentChanged);
+
+    // If editing an existing note, load metadata (pinned/locked)
+    if (_noteId != null) {
+      _loadNoteMetadata();
+    }
   }
 
   @override
@@ -89,7 +94,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           title: title,
           content: content,
           color: null,
-          isFavorite: _isFavorite,
+          ispinned: _ispinned,
         );
         if (createdId != null) {
           _noteId = createdId;
@@ -101,7 +106,7 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           title: title,
           content: content,
           color: null,
-          isFavorite: _isFavorite,
+          ispinned: _ispinned,
         );
       }
     } catch (e) {
@@ -118,9 +123,9 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
     return success;
   }
 
-  void _toggleFavorite() {
+  void _togglepinned() {
     setState(() {
-      _isFavorite = !_isFavorite;
+      _ispinned = !_ispinned;
     });
   }
 
@@ -271,7 +276,22 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
       ),
     );
   }
-
+  /// Load metadata (pinned, lock state) for existing notes
+  Future<void> _loadNoteMetadata() async {
+    if (_noteId == null) return;
+    try {
+      final note = await _notesService.getNoteById(_noteId!);
+      if (note != null) {
+        setState(() {
+          _ispinned = (note['is_pinned'] as bool?) ?? false;
+          // If you later add a lock flag in DB, load it here as well
+          // _isLocked = (note['is_locked'] as bool?) ?? false;
+        });
+      }
+    } catch (e) {
+      print('Error loading note metadata: $e');
+    }
+  }
   Future<void> _handleBack() async {
     // Cancel any pending autosave and attempt to save immediately
     _debounceTimer?.cancel();
@@ -342,11 +362,15 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
             onPressed: _toggleLock,
           ),
           IconButton(
-            icon: Icon(
-              _isFavorite ? Icons.star : Icons.star_border,
-              color: _isFavorite ? AppColors.lockIndicator : AppColors.textSecondary,
+            icon: Transform.rotate(
+              angle: 0.7,
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.push_pin,
+                color: _ispinned ? AppColors.lockIndicator : AppColors.textSecondary,
+              ),
             ),
-            onPressed: _toggleFavorite,
+            onPressed: _togglepinned,
           ),
           IconButton(
             icon: Icon(Icons.more_vert, color: AppColors.textPrimary),

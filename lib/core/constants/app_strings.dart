@@ -72,7 +72,7 @@ class AppStrings {
 
   // Filters
   static const String filterAll = 'All';
-  static const String filterFavorites = 'Favorites';
+  static const String filterpinned = 'pinned';
   static const String filterLocked = 'Locked';
   static const String filterRecent = 'Recent';
 
@@ -80,8 +80,8 @@ class AppStrings {
   static const String noSearchResults = 'No notes found';
   static const String tryDifferentSearch = 'Try a different search term';
   static const String clearSearch = 'Clear search';
-  static const String noFavorites = 'No favorites yet';
-  static const String noFavoritesSubtitle = 'Tap star on notes to add them here';
+  static const String nopinned = 'No pinned yet';
+  static const String nopinnedSubtitle = 'Tap star on notes to add them here';
 
   // ========== EDITOR ==========
   static const String thisNoteIsLocked = 'This note is locked';

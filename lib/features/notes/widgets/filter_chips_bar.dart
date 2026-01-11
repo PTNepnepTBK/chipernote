@@ -5,7 +5,7 @@ import '../../../core/constants/app_text_styles.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_durations.dart';
 
-enum NoteFilter { all, favorites, locked, recent }
+enum NoteFilter { all, pinned, locked, recent }
 
 class FilterChipsBar extends StatefulWidget {
   final NoteFilter selectedFilter;
@@ -34,8 +34,8 @@ class _FilterChipsBarState extends State<FilterChipsBar> {
     switch (filter) {
       case NoteFilter.all:
         return AppStrings.filterAll;
-      case NoteFilter.favorites:
-        return AppStrings.filterFavorites;
+      case NoteFilter.pinned:
+        return AppStrings.filterpinned;
       case NoteFilter.locked:
         return AppStrings.filterLocked;
       case NoteFilter.recent:
@@ -47,8 +47,8 @@ class _FilterChipsBarState extends State<FilterChipsBar> {
     switch (filter) {
       case NoteFilter.all:
         return Icons.grid_view;
-      case NoteFilter.favorites:
-        return Icons.star;
+      case NoteFilter.pinned:
+        return Icons.push_pin;
       case NoteFilter.locked:
         return Icons.lock;
       case NoteFilter.recent:
@@ -98,13 +98,25 @@ class _FilterChipsBarState extends State<FilterChipsBar> {
                   label: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        _getFilterIcon(filter),
-                        size: 16,
-                        color: isSelected
-                            ? AppColors.textPrimary
-                            : AppColors.textSecondary,
-                      ),
+                      filter == NoteFilter.pinned
+                          ? Transform.rotate(
+                              angle: 0.7,
+                              alignment: Alignment.center,
+                              child: Icon(
+                                _getFilterIcon(filter),
+                                size: 16,
+                                color: isSelected
+                                    ? AppColors.textPrimary
+                                    : AppColors.textSecondary,
+                              ),
+                            )
+                          : Icon(
+                              _getFilterIcon(filter),
+                              size: 16,
+                              color: isSelected
+                                  ? AppColors.textPrimary
+                                  : AppColors.textSecondary,
+                            ),
                       SizedBox(width: AppDimensions.spacingXs),
                       Text(_getFilterLabel(filter)),
                     ],

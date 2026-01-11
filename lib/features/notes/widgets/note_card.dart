@@ -149,12 +149,16 @@ class _NoteCardState extends State<NoteCard> with SingleTickerProviderStateMixin
                             size: 16,
                             color: AppColors.lockIndicator,
                           ),
-                        if (widget.note.isFavorite) ...[
+                        if (widget.note.ispinned) ...[
                           SizedBox(width: AppDimensions.spacingXs),
-                          Icon(
-                            Icons.star,
-                            size: 16,
-                            color: AppColors.lockIndicator,
+                          Transform.rotate(
+                            angle: 0.7,
+                            alignment: Alignment.bottomLeft,
+                            child: Icon(
+                              Icons.push_pin,
+                              size: 16,
+                              color: AppColors.lockIndicator,
+                            ),
                           ),
                         ],
                       ],
