@@ -129,21 +129,6 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
     });
   }
 
-  void _toggleLock() {
-    setState(() {
-      _isLocked = !_isLocked;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(_isLocked
-            ? AppStrings.noteLockedWithPassword
-            : 'Note unlocked'),
-        duration: Duration(seconds: 2),
-        backgroundColor: AppColors.info,
-      ),
-    );
-  }
-
   void _showMoreOptions() {
     showModalBottomSheet(
       context: context,
@@ -323,7 +308,6 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
           onPressed: () => _handleBack(),
         ),
         title: Row(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               _saveStatus == AppStrings.allSaved
@@ -337,10 +321,14 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
                   : AppColors.textSecondary,
             ),
             SizedBox(width: AppDimensions.spacingSm),
-            Text(
-              _saveStatus,
-              style: AppTextStyles.labelMedium.copyWith(
-                color: AppColors.textSecondary,
+            Expanded(
+              child: Text(
+                _saveStatus,
+                style: AppTextStyles.labelMedium.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+                softWrap: true,
+                maxLines: 2,
               ),
             ),
           ],
@@ -353,13 +341,6 @@ class _NoteEditorScreenState extends State<NoteEditorScreen> {
               if (saved) Navigator.pop(context, true);
               else ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nothing to save or failed to save')));
             },
-          ),
-          IconButton(
-            icon: Icon(
-              _isLocked ? Icons.lock : Icons.lock_open,
-              color: _isLocked ? AppColors.lockIndicator : AppColors.success,
-            ),
-            onPressed: _toggleLock,
           ),
           IconButton(
             icon: Transform.rotate(

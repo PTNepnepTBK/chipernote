@@ -5,7 +5,7 @@ import '../../../core/constants/app_text_styles.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/constants/app_durations.dart';
 
-enum NoteFilter { all, pinned, locked, recent }
+enum NoteFilter { all, pinned, recent }
 
 class FilterChipsBar extends StatefulWidget {
   final NoteFilter selectedFilter;
@@ -36,8 +36,7 @@ class _FilterChipsBarState extends State<FilterChipsBar> {
         return AppStrings.filterAll;
       case NoteFilter.pinned:
         return AppStrings.filterpinned;
-      case NoteFilter.locked:
-        return AppStrings.filterLocked;
+
       case NoteFilter.recent:
         return AppStrings.filterRecent;
     }
@@ -49,8 +48,6 @@ class _FilterChipsBarState extends State<FilterChipsBar> {
         return Icons.grid_view;
       case NoteFilter.pinned:
         return Icons.push_pin;
-      case NoteFilter.locked:
-        return Icons.lock;
       case NoteFilter.recent:
         return Icons.access_time;
     }

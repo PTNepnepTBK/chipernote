@@ -189,9 +189,6 @@ class _NotesListScreenState extends State<NotesListScreen>
         case NoteFilter.pinned:
           _filteredNotes = _notes.where((n) => n.ispinned).toList();
           break;
-        case NoteFilter.locked:
-          _filteredNotes = _notes.where((n) => n.hasIndependentPassword).toList();
-          break;
         case NoteFilter.recent:
           _filteredNotes = List.from(_notes)
             ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
